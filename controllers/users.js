@@ -26,9 +26,9 @@ module.exports.renderLoginForm = (req, res) => {
     res.render("users/login");
 };
 module.exports.login = async (req, res) => {
-        // This callback is not necessary, but can be used for additional logic if needed
-        req.flash("success", "Welcome back!");
-        res.redirect(res.locals.redirectUrl || "/listing");
+    req.flash("success", "Welcome back!");
+    const redirectUrl = res.locals.redirectUrl || "/listing";
+    res.redirect(redirectUrl);
 };
 module.exports.logout = (req, res) => {
     req.logout((err) => {

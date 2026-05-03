@@ -1,0 +1,46 @@
+<div id="chat-container" class="border rounded p-3 mt-4">
+  <h4>Chat with Owner</h4>
+  <div id="messages" class="border rounded p-2 mb-3" style="height: 300px; overflow-y: auto; background-color: #f8f9fa;"></div>
+  
+  <form id="message-form">
+    <div class="input-group">
+      <input type="text" id="message-input" class="form-control" placeholder="Type a message..." required autocomplete="off">
+      <button class="btn btn-primary" type="submit">Send</button>
+    </div>
+  </form>
+</div>
+
+<script>
+  // Simple chat interface (without Socket.io for now)
+  const messageForm = document.getElementById('message-form');
+  const messageInput = document.getElementById('message-input');
+  const messagesContainer = document.getElementById('messages');
+  
+  // Get username and listing ID from the page
+  const username = '<%= currentUser ? currentUser.username : "Guest" %>';
+  const listingId = '<%= listingdata._id %>';
+  
+  // Simple message display (you can enhance this later)
+  messageForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const message = messageInput.value.trim();
+    if (!message) return;
+    
+    // Create message element
+    const messageElement = document.createElement('div');
+    messageElement.classList.add('mb-2', 'p-2', 'rounded', 'bg-primary', 'text-white', 'text-end');
+    messageElement.innerHTML = `
+      <small>${username} • ${new Date().toLocaleTimeString()}</small>
+      <div>${message}</div>
+    `;
+    
+    // Add to container and scroll to bottom
+    messagesContainer.appendChild(messageElement);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    
+    // Clear input
+    messageInput.value = '';
+    messageInput.focus();
+  });
+</script>

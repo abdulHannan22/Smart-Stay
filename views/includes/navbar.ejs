@@ -1,13 +1,13 @@
 <style>
   .inp-search {
     border-radius: 25px;
-    padding: 0.5rem 3rem 0.5rem 3rem;
+    padding: 0.5rem 1rem;
   }
   .btn-search {
     background-color: #fe434d;
     color: #ebebeb;
     border-radius: 25px;
-    padding: 0 1rem 0 1rem;
+    padding: 0 1rem;
   }
   .btn-search:hover {
     background-color: #e12f3d;
@@ -18,43 +18,58 @@
     margin-right: 0.5rem;
   }
 </style>
+
 <nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/listing"><i class="fa-solid fa-compass"></i></a>
+    <!-- Brand -->
+    <a class="navbar-brand" href="/listing">
+      <i class="fa-solid fa-compass"></i>
+    </a>
+    
+    <!-- Toggle button for mobile -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+    
+    <!-- Single collapsible container -->
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
+      <!-- Left side navigation -->
+      <ul class="navbar-nav me-auto">
         <li class="nav-item">
           <a class="nav-link" href="/listing">Explore</a>
         </li>
-      </ul>
-    </div>
-    <div class="navbar-nav ms-auto ">
-        <form class="d-flex ">
-          <input  class="form-control me-2 inp-search" type="search" placeholder="Search Destination" >
-
-          <button class="btn btn-search" type="submit"> <i class="fa-solid fa-magnifying-glass"></i>Search</button>
-        </form>
-    </div>
-    
-    <div class="collapse navbar-collapse " >
-      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/chatbot">Chatbot</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="/listing/new">Add Your Stay</a>
         </li>
-        <% if(currentUser){ %>
-         <li class="nav-item "> 
-            <li><a class="nav-link dropdowne">
-              <i class="fa-solid fa-user"></i> <%= currentUser.username %></a>
-            </li>
-            <li><a class="nav-link" href="/logout">Logout</a></li>
+      </ul>
+      
+      <!-- Search form -->
+      <form class="d-flex me-3">
+        <input class="form-control me-2 inp-search" type="search" placeholder="Search Destination">
+        <button class="btn btn-search" type="submit">
+          <i class="fa-solid fa-magnifying-glass"></i>Search
+        </button>
+      </form>
+      
+      <!-- Right side navigation -->
+      <ul class="navbar-nav">
+        <% if(typeof currentUser !== 'undefined' && currentUser) { %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-solid fa-user"></i> <%= currentUser.username %>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="userDropdown">
+              <!-- <li><a class="dropdown-item" href="/profile">Profile</a></li> -->
+              <!-- <li><hr class="dropdown-divider"></li> -->
+              <li><a class="dropdown-item" href="/logout">Logout</a></li>
+            </ul>
           </li>
-      </ul> 
         <% } else { %>
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="/signup">Signup</a>
+            <a class="nav-link" href="/signup">Signup</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/login">Login</a>
