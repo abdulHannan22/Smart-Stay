@@ -34,7 +34,9 @@ app.use(express.json());
 
 // Session configuration
 const store = MongoStore.create({
-    mongoUrl: process.env.ATLASDB_URL,
+    mongoUrl: process.env.NODE_ENV !== 'production'
+        ? (process.env.LOCAL_DB_URL || "mongodb://127.0.0.1:27017/ExplorePlace")
+        : (process.env.ATLASDB_URL || process.env.LOCAL_DB_URL || "mongodb://127.0.0.1:27017/ExplorePlace"),
     touchAfter: 24 * 60 * 60,
     crypto: {
         secret: process.env.SECRET,
@@ -84,8 +86,10 @@ app.use((req, res, next) => {
 
 
 // Database connection
-// const MONGO_URL ="mongodb://127.0.0.1:27017/ExplorePlace"
-const DBurl = process.env.ATLASDB_URL || process.env.LOCAL_DB_URL || "mongodb://127.0.0.1:27017/ExplorePlace";
+// In development prefer the local DB to avoid Atlas DNS/SSL issues when ATLAS URL is set incorrectly
+const DBurl = process.env.NODE_ENV !== 'production'
+    ? (process.env.LOCAL_DB_URL || "mongodb://127.0.0.1:27017/ExplorePlace")
+    : (process.env.ATLASDB_URL || process.env.LOCAL_DB_URL || "mongodb://127.0.0.1:27017/ExplorePlace");
 
 const mongooseOptions = {
     useNewUrlParser: true,
@@ -95,8 +99,8 @@ const mongooseOptions = {
     family: 4, // Use IPv4, skip trying IPv6
     retryWrites: true,
     w: 'majority',
-    tls: true,
-    tlsAllowInvalidCertificates: false,
+    tls: process.env.NODE_ENV === 'production',
+    tlsAllowInvalidCertificates: process.env.NODE_ENV === 'production' ? false : true,
 };
 
 async function main() {

@@ -14,7 +14,7 @@
                 style="height: 300px; object-fit: cover;">
             <div class="card-body">
                 <p class="card-text">
-                    Owned By : <%= listingdata.owner.username %> <br>
+                    Owned By : <%= listingdata.owner ? listingdata.owner.username : 'Unknown' %> <br>
                     <%= listingdata.description %> <br>
                     &#8377; <%= listingdata.price.toLocaleString("en-IN") %> <br>
                     <%= listingdata.location %> <br>
@@ -23,7 +23,7 @@
             </div>
         </div>
         <br>
-        <% if(currentUser && currentUser._id.equals(listingdata.owner._id)) { %>
+        <% if(currentUser && listingdata.owner && currentUser._id.equals(listingdata.owner._id)) { %>
             <div class="col-8 offset-3 mt-4">
                 <h4>Listing Owner</h4>
                 <p class="card-text">You are the owner of this listing.</p>
