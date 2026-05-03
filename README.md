@@ -95,20 +95,5 @@ A full-stack Node.js web app for listing and booking stays (ExplorePlace). This 
    ```
 5. Visit `http://localhost:3000` — the app redirects root to `/listing`.
 
-**Troubleshooting (common issues)**
-- "Could not find include './chat'": create `views/listing/chat.ejs` or remove the include from `show.ejs`.
-- `Cannot set properties of undefined (setting 'redirectUrl')`: ensure `saveRedirectUrl` uses `res.locals` and that your `isLoggedIn` middleware sets `req.session.redirectUrl`.
-- Flash: if `success`/`error` are undefined in templates, ensure middleware that sets `res.locals.success = req.flash('success')` runs before routes and that `connect-flash` is used.
-- MongoDB SSL / Atlas TLS errors: update connection string or set `tlsAllowInvalidCertificates` while debugging; verify IP whitelist and network access in Atlas.
-- Image schema errors: `Cast to string failed` means the code attempted to save an object. The model expects `image` as a string URL; ensure uploads set `listing.image` to a string (e.g., `file.secure_url`).
-
-**Deployment & Live Notes**
-- Ensure `ATLASDB_URL` and other secrets are set in the hosting environment.
-- Redirect root to `/listing` is already implemented in `app.js` so the site landing page is `/listing` when deployed.
-
-**I can also**
-- create `views/listing/chat.ejs` now with a small Socket.io client example
-- add `init/init-db.js` seeding script (if missing) and run it locally
-
 ---
 _README generated to reflect current project structure and runtime flow._
